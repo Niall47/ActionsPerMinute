@@ -1,17 +1,7 @@
 from flask import Flask, jsonify, Response, request
 
 apm = 0
-
-def add_keys(keys):
-        global apm
-        apm += keys
-        return apm
-
-def zero_apm():
-        global apm
-        apm = 0
-        return "Great success"
-
+total = 0
 
 app = Flask(__name__)
 class Server():
@@ -21,13 +11,17 @@ class Server():
 
         @app.route('/reset')
         def reset():
-                reply = zero_apm()
-                return reply
+                global apm
+                global total
+                total = total + apm
+                apm = 0
+                return jsonify("Great success")
                 
         @app.route('/apm/<int:keys>')
         def update(keys):
-                result = add_keys(keys)
-                return jsonify(result)
-        app.run(port=3048)
+                global apm
+                apm += 1
+                return jsonify(apm)
 
+app.run(port=3048)
 Server()

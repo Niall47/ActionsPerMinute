@@ -1,4 +1,5 @@
 #!/bin/bash
 
-python3 keyboard.py &
-python3 server.py &
+iterm -e "python3 keyboard.py" 
+python3 reset.py &
+python3 server.py 
